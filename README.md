@@ -21,3 +21,7 @@ Host Ping project that "works" concurrently. Just started working on the project
 ### Todo
 - ~~Release v0.1~~
 - Everything else
+
+---
+
+Thanks to [SwiftyPing](https://github.com/samiyr/SwiftyPing) for making this project available.
