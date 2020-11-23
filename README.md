@@ -1,4 +1,4 @@
-# ConcurrentPinger
+# ConcurrentPinger v0.0.1
 
 Host Ping project that "works" concurrently. Just started working on the project, a lot of issues are happening at this moment. Feel free to report them on the [Issues](https://github.com/krispis1/ConcurrentPinger/issues) section above.
 
