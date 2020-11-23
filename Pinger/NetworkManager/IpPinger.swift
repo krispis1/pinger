@@ -17,9 +17,14 @@ class IpPinger {
         if globalIndex == 1000 {
             return
         }
+        print("Next rotation: \(globalIndex)")
+        //print("IP index on start: \(index)")
+        //print(queue.operationCount)
         let pinger = try? SwiftyPing(host: "192.168.1.\(index)", configuration: PingConfiguration(interval: 3, with: 3), queue: DispatchQueue.global())
         pinger?.observer = { (response) in
             if response.ipHeader == nil {
+                print("********************")
+                print("not reachable \(response.ipAddress!)")
                 if response.sequenceNumber == (pinger?.targetCount)!-1 {
                     var toAdd = true
                     if !scannedIps.isEmpty {
@@ -42,7 +47,10 @@ class IpPinger {
                         }
                     }
                     pinger?.haltPinging(resetSequence: true)
+                    print("done")
                     if self.globalIndex+1 <= 254 {
+                        print("Index: \(index)")
+                        print("********************")
                         self.globalIndex += 1
                         if self.globalIndex != 1000 {
                             self.ping(index: self.globalIndex)
@@ -73,8 +81,10 @@ class IpPinger {
                         tableView.reloadData()
                     }
                 }
+                print("HIT \(response.ipAddress!)")
                 pinger?.haltPinging(resetSequence: true)
                 self.queue.cancelAllOperations()
+                print("done")
                 if index+self.queue.maxConcurrentOperationCount <= 254 {
                     if index > self.queue.maxConcurrentOperationCount {
                         self.globalIndex = self.hitIps[self.hitIps.count-1]
@@ -111,6 +121,9 @@ class IpPinger {
             indexToRemove.removeAll()
         }
         let ignoredIndex = hitIps
+        for x in ignoredIndex {
+            print("IGNORED IP: \(x)")
+        }
         queue.maxConcurrentOperationCount = 10
         if firstRun {
             globalIndex = queue.maxConcurrentOperationCount

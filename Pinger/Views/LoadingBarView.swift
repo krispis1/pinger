@@ -38,6 +38,7 @@ class LoadingBarView: UIView {
     
     func updateProgressBar() {
         loadingBar.setProgress(Float(Double(scannedIps.count) / 254.0), animated: true)
+        print(scannedIps.count)
     }
 
 }
